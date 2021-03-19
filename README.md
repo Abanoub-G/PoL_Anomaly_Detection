@@ -1,7 +1,8 @@
 # PoL_Anomaly_Detection
 
-- Add details of how to setup opencv on a linux machine or just put a link on how to install that.
-To work on the virtual environment execute the commande below: 
+- Add details of how to setup opencv on a linux machine or just put a link on how to install that: https://www.pyimagesearch.com/2018/05/28/ubuntu-18-04-how-to-install-opencv/
+
+- To work on the virtual environment execute the commande below: 
 workon cv 
 
 
