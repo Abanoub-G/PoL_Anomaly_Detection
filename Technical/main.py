@@ -194,17 +194,17 @@ def yolo_extract_objects_in_image(image_path):
   return boxes
 
 
-class feature_vector():
-  def __init__(self,w1,w2,w3,optical_flow_resultant, box, confidences):
-    self.velocity_mean_w1       =  * w1
-    self.velocity_variance_w1   =  * w1
-    self.velocity_skewness_w1   =  * w1
-    self.velocity_kurtosis_w1   =  * w1
-    self.C_x_w2                 =  * w2
-    self.C_y_w2                 =  * w2
-    self.area_w2                =  * w2
+# class feature_vector():
+#   def __init__(self,w1,w2,w3,optical_flow_resultant, box, confidences):
+#     self.velocity_mean_w1       =  * w1
+#     self.velocity_variance_w1   =  * w1
+#     self.velocity_skewness_w1   =  * w1
+#     self.velocity_kurtosis_w1   =  * w1
+#     self.C_x_w2                 =  * w2
+#     self.C_y_w2                 =  * w2
+#     self.area_w2                =  * w2
 
-    self.classes_confidences_w3 = confidences * w3
+#     self.classes_confidences_w3 = confidences * w3
 
 
 
@@ -212,10 +212,10 @@ class feature_vector():
 
     
 
-def produce_feature_vector(optical_flow_image, boxes_of_detected_objects, ):
+# def produce_feature_vector(optical_flow_image, boxes_of_detected_objects, ):
 
 
 # def map_yolo_to optical_flow():
-# yolo_extract_objects_in_image("180.jpg")
+yolo_extract_objects_in_image("180.jpg")
 
-convert_optical_flow_to_reduced_veolcity_plot('180.flo', 10, 10)
+# convert_optical_flow_to_reduced_veolcity_plot('180.flo', 10, 10)
