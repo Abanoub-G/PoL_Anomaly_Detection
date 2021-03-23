@@ -190,13 +190,13 @@ sudo pip3 install tensorflow
 sudo pip3 install keras
 
 # How to update Keras and Tensorflow(Reference[7])
-##Step #1: Upgrade Tensorboard
+## Step #1: Upgrade Tensorboard
 pip3 install --user --upgrade tensorboard
-##Step #2: Upgrade Tensorflow
+## Step #2: Upgrade Tensorflow
 pip3 install --user --upgrade tensorflow-gpu
-##Step #3: Downgrade Keras
+## Step #3: Downgrade Keras
 pip3 install keras==2.3.1
-##Step #4: Downgrade tensorflow-gpu
+##S tep #4: Downgrade tensorflow-gpu
 pip3 install --user --upgrade tensorflow-gpu==1.14.0
 
 # References
