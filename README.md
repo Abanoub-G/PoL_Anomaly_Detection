@@ -169,6 +169,36 @@ $ rm opencv.zip opencv_contrib.zip
 $ rm -rf opencv opencv_contrib
 
 
+# How to setup Keras (Reference[6])
+## Step #1: install python3
+sudo apt-get install python3-pip python3-dev
+## Step #2: install OpenBLAS
+sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev liblapack-dev
+## Step #3: install NumPy, SciPy, matplotlib
+sudo apt-get install python-numpy python-scipy python-matplotlib python-yaml
+sudo pip3 install matplotlib
+## Step #4: install HDF5
+sudo apt-get install libhdf5-serial-dev python-h5py
+## Step #5: install Graphviz, pydot-ng
+sudo apt-get install graphviz
+sudo pip3 install pydot-ng
+## Step #6: install OpenCV
+sudo apt-get install python-opencv
+## Step #7: install TensorFlow (without GPU support)
+sudo pip3 install tensorflow
+## Step #8: install Keras (without GPU support)
+sudo pip3 install keras
+
+# How to update Keras and Tensorflow(Reference[7])
+##Step #1: Upgrade Tensorboard
+pip3 install --user --upgrade tensorboard
+##Step #2: Upgrade Tensorflow
+pip3 install --user --upgrade tensorflow-gpu
+##Step #3: Downgrade Keras
+pip3 install keras==2.3.1
+##Step #4: Downgrade tensorflow-gpu
+pip3 install --user --upgrade tensorflow-gpu==1.14.0
+
 # References
 [1] https://www.pyimagesearch.com/2018/05/28/ubuntu-18-04-how-to-install-opencv/)
 
@@ -178,4 +208,7 @@ $ rm -rf opencv opencv_contrib
 [3] https://machinelearningmastery.com/encoder-decoder-attention-sequence-to-sequence-prediction-keras/
 [4] https://machinelearningmastery.com/what-are-generative-adversarial-networks-gans/
 [5] https://machinelearningmastery.com/encoder-decoder-attention-sequence-to-sequence-prediction-keras/
+
+[6] https://github.com/hsekia/learning-keras/wiki/How-to-install-Keras-to-Ubuntu-18.04
+[7] https://stackoverflow.com/questions/62465620/error-keras-requires-tensorflow-2-2-or-higher
 
