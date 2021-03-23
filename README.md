@@ -213,10 +213,15 @@ pip3 install --user --upgrade tensorflow-gpu==1.14.0
 
 # List of tutorials useful for autoencoders
 [1] https://machinelearningmastery.com/autoencoder-for-classification/
+
 [2] https://machinelearningmastery.com/lstm-autoencoders/
+
 [3] https://machinelearningmastery.com/encoder-decoder-attention-sequence-to-sequence-prediction-keras/
+
 [4] https://machinelearningmastery.com/what-are-generative-adversarial-networks-gans/
+
 [5] https://machinelearningmastery.com/encoder-decoder-attention-sequence-to-sequence-prediction-keras/
 
 [6] https://github.com/hsekia/learning-keras/wiki/How-to-install-Keras-to-Ubuntu-18.04
+
 [7] https://stackoverflow.com/questions/62465620/error-keras-requires-tensorflow-2-2-or-higher

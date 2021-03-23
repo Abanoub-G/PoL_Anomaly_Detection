@@ -34,11 +34,11 @@ num_of_columns_in_original = len(uv[:][:][0]) #unit is pixel
 # print("num_pixels_columns",num_columns_original)
 # print("uv shape is",uv.shape)
 
-num_of_rows_per_block = 10 # unit is pixel
-num_of_column_per_block = 10 # unit is pixel
+num_of_rows_per_block = 20 # unit is pixel
+num_of_column_per_block = 20 # unit is pixel
 
-num_of_blocks_for_per_row_orinigal = num_of_rows_in_original/num_of_rows_per_block # unit is block
-num_of_blocks_for_per_column_orinigal = num_of_columns_in_original/num_of_column_per_block # unit is block
+num_of_blocks_for_per_row_orinigal = int(num_of_rows_in_original/num_of_rows_per_block) # unit is block
+num_of_blocks_for_per_column_orinigal = int(num_of_columns_in_original/num_of_column_per_block) # unit is block
 # print("num_of_blocks_for_per_row_orinigal",num_of_blocks_for_per_row_orinigal)
 # print("num_of_blocks_for_per_column_orinigal",num_of_blocks_for_per_column_orinigal)
 velocity_of_block_matrix = np.zeros((num_of_blocks_for_per_row_orinigal,num_of_blocks_for_per_column_orinigal,2))
