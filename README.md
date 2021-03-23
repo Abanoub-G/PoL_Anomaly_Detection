@@ -30,6 +30,11 @@ ShanghaiTech Campus dataset (Anomaly Detection): https://svip-lab.github.io/data
 
 Then put them in folder ...
 
+# Installing flownet2 
+
+# Producing flownet image from two single images  [2]
+- ./run-network.sh -n FlowNet2 -v data/0000000-imgL.png data/0000001-imgL.png flow.flo
+
 # Repository hierarchy 
 
 
@@ -210,6 +215,8 @@ pip3 install --user --upgrade tensorflow-gpu==1.14.0
 
 # References
 [1] https://www.pyimagesearch.com/2018/05/28/ubuntu-18-04-how-to-install-opencv/)
+
+[2] https://github.com/lmb-freiburg/flownet2-docker
 
 # List of tutorials useful for autoencoders
 [1] https://machinelearningmastery.com/autoencoder-for-classification/
