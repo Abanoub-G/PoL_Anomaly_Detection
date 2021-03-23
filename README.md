@@ -9,8 +9,12 @@ workon cv
 - Run video using this command: 
 python3 main_video_detection.py --input videos/01.avi --output output/video01.avi --yolo yolo-coco
 
+# Prerequisites
+- Install flowiz:
+sudo pip3 install flowiz -U
+
 # Setup
-- Get the YOLO v3 wieghts folder from daknet's website: https://pjreddie.com/darknet/yolo/
+- Get YOLO v3 wieghts folder from daknet's website: https://pjreddie.com/darknet/yolo/
 OR 
 Just execute this command in your terminal:
 wget https://pjreddie.com/media/files/yolov3.weights
@@ -63,7 +67,7 @@ $ sudo apt-get install libatlas-base-dev gfortran
 - Install Python 3 headers and libraries:
 $ sudo apt-get install python3.6-dev
 
-##Step #2: Download the official OpenCV source
+## Step #2: Download the official OpenCV source
 - Download the official OpenCV release using wget:
 $ cd ~
 $ wget -O opencv.zip https://github.com/opencv/opencv/archive/3.4.4.zip
@@ -79,13 +83,13 @@ $ unzip opencv_contrib.zip
 $ mv opencv-3.4.4 opencv
 $ mv opencv_contrib-3.4.4 opencv_contrib
 
-##Step #3: Configure your Python 3 environment
+## Step #3: Configure your Python 3 environment
 - To install pip:
 $ wget https://bootstrap.pypa.io/get-pip.py
 $ sudo python3 get-pip.py
 
 - It is a best practice to use virtual environments. install  virtualenv and virtualenvwrapper:
-$ sudo pip install virtualenv virtualenvwrapper
+$ sudo pip3 install virtualenv virtualenvwrapper
 $ sudo rm -rf ~/get-pip.py ~/.cache/pip
 
 - To finish the install update your .bashrc file.
@@ -107,7 +111,7 @@ $ workon cv
 $ pip install numpy
 
 
-##Step #4: Configure and compile OpenCV for Ubuntu 18.04
+## Step #4: Configure and compile OpenCV for Ubuntu 18.04
 - Ensure that we’re in the cv virtual environment:
 $ workon cv
 
@@ -135,7 +139,7 @@ $ pkg-config --modversion opencv
 You should get: 
 3.4.4
 
-##Step #5: Finish your Python+ OpenCV + Ubuntu 18.04 install
+## Step #5: Finish your Python+ OpenCV + Ubuntu 18.04 install
 
 At this point, your Python 3 bindings for OpenCV should reside in the following folder:
 $ ls /usr/local/python/cv2/python-3.6
@@ -147,13 +151,13 @@ $ sudo mv cv2.cpython-36m-x86_64-linux-gnu.so cv2.opencv3.4.4.so
 
 - Last sub-step is to sym-link our OpenCV cv2.opencv3.4.4.so bindings into our cv virtual environment:
 $ cd ~/.virtualenvs/cv/lib/python3.6/site-packages/
-$ ln -s /usr/local/python/cv2/python-3.6/cv2.opencv3.4.4.so cv2.opencv3.4.4.so
+$ ln -s /usr/local/python/cv2/python-3.6/cv2.opencv3.4.4.so cv2.so
 
 
-##Step #6: Testing your OpenCV 3 install on Ubuntu 18.04
+## Step #6: Testing your OpenCV 3 install on Ubuntu 18.04
 $ cd ~
 $ workon cv
-$ python
+$ pythons
 Python 3.6.5 (default, Apr 1 2018, 05:46:30)
 [GCC 7.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
@@ -164,9 +168,13 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 
 - You can safely delete the zips and directories in your home folder:
+
 $ cd ~
+
 $ rm opencv.zip opencv_contrib.zip
+
 $ rm -rf opencv opencv_contrib
+
 
 
 # How to setup Keras (Reference[6])
@@ -199,6 +207,7 @@ pip3 install keras==2.3.1
 ##S tep #4: Downgrade tensorflow-gpu
 pip3 install --user --upgrade tensorflow-gpu==1.14.0
 
+
 # References
 [1] https://www.pyimagesearch.com/2018/05/28/ubuntu-18-04-how-to-install-opencv/)
 
@@ -211,4 +220,3 @@ pip3 install --user --upgrade tensorflow-gpu==1.14.0
 
 [6] https://github.com/hsekia/learning-keras/wiki/How-to-install-Keras-to-Ubuntu-18.04
 [7] https://stackoverflow.com/questions/62465620/error-keras-requires-tensorflow-2-2-or-higher
-
