@@ -204,13 +204,33 @@ sudo pip3 install keras
 
 # How to update Keras and Tensorflow(Reference[7])
 ## Step #1: Upgrade Tensorboard
-pip3 install --user --upgrade tensorboard
+sudo pip3 install --user --upgrade tensorboard
 ## Step #2: Upgrade Tensorflow
-pip3 install --user --upgrade tensorflow-gpu
+sudo pip3 install --user --upgrade tensorflow-gpu
 ## Step #3: Downgrade Keras
-pip3 install keras==2.3.1
+sudo pip3 install keras==2.3.1
 ##S tep #4: Downgrade tensorflow-gpu
-pip3 install --user --upgrade tensorflow-gpu==1.14.0
+sudo pip3 install --user --upgrade tensorflow-gpu==1.14.0
+
+# How to Install pydo(Reference[8])
+## Step #1: Install right version of numbo
+sudo pip3 install numba == 0.47
+## Step #2: Install right version of llvmlite
+sudo pip3 install llvmlite == 0.32.1
+## Step #3: Install Dependency in [8]
+   Python 2.7, 3.5, 3.6, or 3.7
+   combo>=0.0.8
+   joblib
+   numpy>=1.13
+   numba>=0.35
+   pandas>=0.25
+   scipy>=0.19.1
+   scikit_learn>=0.19.1
+   statsmodels
+##S tep #4: Install pyod
+sudo pip3 install pyod  
+
+
 
 
 # References
@@ -232,3 +252,5 @@ pip3 install --user --upgrade tensorflow-gpu==1.14.0
 [6] https://github.com/hsekia/learning-keras/wiki/How-to-install-Keras-to-Ubuntu-18.04
 
 [7] https://stackoverflow.com/questions/62465620/error-keras-requires-tensorflow-2-2-or-higher
+
+[8] https://github.com/yzhao062/pyod
