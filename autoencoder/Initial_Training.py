@@ -9,7 +9,7 @@ from __future__ import print_function
 
 
 
-from pyod.pyod.models.auto_encoder import AutoEncoder
+from pyod.models.auto_encoder import AutoEncoder
 from joblib import dump, load
 import numpy as np
 import pandas as pd

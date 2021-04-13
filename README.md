@@ -30,6 +30,14 @@ ShanghaiTech Campus dataset (Anomaly Detection): https://svip-lab.github.io/data
 
 Then put them in folder ...
 
+- MNIST dataset: http://yann.lecun.com/exdb/mnist/index.html
+
+Download 1.training set images 2.training set labels 3.test set images 4.test set labels 
+
+Exrtact these four files into the same directory as those two py file.
+
+
+
 # Installing flownet2 
 
 # Producing flownet image from two single images  [2]

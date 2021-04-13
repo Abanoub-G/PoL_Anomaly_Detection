@@ -48,7 +48,9 @@ for i in range(num_of_rows_in_original):
     uv_summary[i,j,1] = temp_v
     # uv_summary[i,j,2] = np.sqrt(temp_u**2 + temp_v**2)
     # uv_summary[i,j,3] = temp_angle
-
+plt.imshow(uv_summary[...,0])
+plt.colorbar()
+plt.show()
 # ======
 # === Find the background optical flow value     
 # ======
@@ -89,6 +91,14 @@ for i in range(num_of_rows_in_original):
     uv_summary[i,j,3] = temp_angle
 
 plt.imshow(uv_summary[...,0])
+plt.colorbar()
+plt.show()
+
+plt.imshow(uv_summary[...,1])
+plt.colorbar()
+plt.show()
+
+plt.imshow(uv_summary[...,2])
 plt.colorbar()
 plt.show()
 

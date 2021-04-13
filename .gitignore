@@ -4,3 +4,7 @@ Technical/videos
 Technical/images
 Technical/yolo-coco/yolov3.weights
 Technical/ObjectDetection/yolo-coco
+Autoencoder_MNIST/t10k-images-idx3-ubyte
+Autoencoder_MNIST/t10k-labels-idx1-ubyte
+Autoencoder_MNIST/train-images-idx3-ubyte
+Autoencoder_MNIST/train-labels-idx1-ubyte
