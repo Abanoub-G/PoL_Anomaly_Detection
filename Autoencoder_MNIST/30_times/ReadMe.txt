@@ -1,0 +1,1 @@
+Please make sure there is a folder of pyod module in the same path as where this ReadMe file resides
