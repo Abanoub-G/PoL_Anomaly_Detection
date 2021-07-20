@@ -81,13 +81,14 @@ def permute_mnist(mnist, seed):
 
 
 # task 1
-task_1 = [(x_train, t_train), (x_test, t_test)]
+portion_1 = int(len(x_train)*0.15)
+task_1 = [(x_train[0:portion_1], t_train[0:portion_1]), (x_test, t_test)]
 
 # task 2
-portion = int(len(x_train)*0.01)
-x_train2, x_test2 = permute_mnist([x_train[0:portion], x_test[0:portion]], 1)
+portion_2 = int(len(x_train)*0.5)
+x_train2, x_test2 = permute_mnist([x_train[0:portion_2], x_test], 1)
 
-task_2 = [(x_train2, t_train[0:portion]), (x_test2, t_test[0:portion])]
+task_2 = [(x_train2, t_train[0:portion_2]), (x_test2, t_test)]
 
 # x_train2, x_test2 = permute_mnist([x_train, x_test], 1)
 
@@ -218,7 +219,7 @@ def test(model_input, device, x_test, t_test):
 # torch.save(model, PATH)
 
 
-def fitness_function(ewc_lambda,lr_value):
+def fitness_function(ewc_lambda,lr_value, momentum_value):
 	(x_train, t_train), _ = tasks[1]
 	
 	torch.save(model.state_dict(), 'model.pt')
@@ -229,7 +230,7 @@ def fitness_function(ewc_lambda,lr_value):
 
 	copyed_model = Net().to(device)
 	copyed_model.load_state_dict(model.state_dict())
-	optimizer = optim.SGD(copyed_model.parameters(), lr=lr_value, momentum=0.9)
+	optimizer = optim.SGD(copyed_model.parameters(), lr=lr_value, momentum=momentum_value)
 
 	for epoch in range(0, 15):
 		copyed_model = train_ewc(copyed_model, device, 1, x_train, t_train, optimizer, epoch,ewc_lambda)
@@ -283,9 +284,14 @@ ewc_lambda = list(np.arange(0,20,1))
 
 results_logs = logs()
 
-lr_value = 0.01 # learning rate
+lr_value_init = 0.01 # learning rate for initial learning
+momentum_value_init = 0.9 # momentum value for initial learning
+
+lr_value_cont = 0.01 # learning rate for continual retraining
+momentum_value_cont = 0.9 # momentum value for continual retraining
+
 model = Net().to(device)
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+optimizer = optim.SGD(model.parameters(), lr=lr_value_init, momentum=momentum_value_init)
 
 ewc_accs = []
 avg_acc = 0
@@ -312,16 +318,22 @@ torch.save(model, PATH)
 
 performance_on_current = []
 for item in ewc_lambda:
-	performance_on_current.append(fitness_function(item,lr_value))
-	task_no = 1
+	performance_on_current.append(fitness_function(item,lr_value_cont,momentum_value_cont),)
+
 	print("acc_old",performance_on_current[-1][0])
 	print("acc_new",performance_on_current[-1][1])
-	results_logs.append(task_no, item, lr_value, performance_on_current[-1][0], performance_on_current[-1][1], portion)
+	dataset_no = 1
+	retraining_dataset_no = 2
+	results_logs.append(retraining_dataset_no, item, lr_value_init, momentum_value_init, lr_value_cont, momentum_value_cont, dataset_no, portion_1, performance_on_current[-1][0])
+	dataset_no = 2
+	retraining_dataset_no = 2
+	results_logs.append(retraining_dataset_no, item, lr_value_init, momentum_value_init, lr_value_cont, momentum_value_cont, dataset_no, portion_2, performance_on_current[-1][1])
+
 
 
 
 # Save results
-results_logs.write_file("results_10.csv")
+results_logs.write_file("results_12.csv")
 
 
 

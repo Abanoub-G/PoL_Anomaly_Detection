@@ -8,3 +8,8 @@ Autoencoder_MNIST/t10k-images-idx3-ubyte
 Autoencoder_MNIST/t10k-labels-idx1-ubyte
 Autoencoder_MNIST/train-images-idx3-ubyte
 Autoencoder_MNIST/train-labels-idx1-ubyte
+OvercomingCF/t10k-images-idx3-ubyte.gz
+OvercomingCF/t10k-labels-idx1-ubyte.gz
+OvercomingCF/train-images-idx3-ubyte.gz
+OvercomingCF/train-labels-idx1-ubyte.gz
+OvercomingCF/mnist.pkl
