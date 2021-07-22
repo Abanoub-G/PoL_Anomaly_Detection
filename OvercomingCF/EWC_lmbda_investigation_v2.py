@@ -246,7 +246,7 @@ for init_dataset_portion in np.arange(2,11,1)/10:
 		if vary_ewc_lambda == True:
 			ewc_lambdas = list(np.arange(0,20,1))   # range of ewc_lambda used in retraining
 		else:
-			ewc_lambdas = [2]
+			ewc_lambdas = [0.5]
 		
 		dataset_no          = 1                 # dataset ID 
 
@@ -281,5 +281,5 @@ for init_dataset_portion in np.arange(2,11,1)/10:
 
 
 # Save results
-results_logs.write_file("results_15.csv")
+results_logs.write_file("results_16.csv")
 
