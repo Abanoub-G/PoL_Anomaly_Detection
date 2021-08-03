@@ -1,4 +1,12 @@
 
+# =======================================================================================
+# DESCRIPTION
+# =======================================================================================
+# This code can be used to investigated the effect of lambda and the dataset sizes used 
+# (in both initial training and retraining) on forgetting whilst learning new tasks.
+# =======================================================================================
+
+
 import torch
 torch.manual_seed(1);
 import torch.nn as nn

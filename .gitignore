@@ -13,3 +13,6 @@ OvercomingCF/t10k-labels-idx1-ubyte.gz
 OvercomingCF/train-images-idx3-ubyte.gz
 OvercomingCF/train-labels-idx1-ubyte.gz
 OvercomingCF/mnist.pkl
+OvercomingCF/X_train.npy
+OvercomingCF/Y_train.npy
+OvercomingCF/FineTuning/

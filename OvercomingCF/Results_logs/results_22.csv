@@ -1,0 +1,3 @@
+current_training_dataset_no, current_training_dataset_size, ewc_lambda, lr_init, momentum_init, lr_cont, momentum_cont, evaluation_dataset_no, evaluation_dataset_size, acc
+0, 60000, 0.000000, 0.010000, 0.900000, 0.000000, 0.000000, 0, 10000, 98.090000
+0, 60000, 0.000000, 0.010000, 0.900000, 0.000000, 0.000000, 1, 10000, 98.090000
