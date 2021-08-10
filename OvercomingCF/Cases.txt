@@ -1,0 +1,11 @@
+
+
+case 1: one class in each set with different instances with the same applied noise function (set size = 100 instances) 
+
+case 2: different calsses, in each set same noise fucntion but between sets different noise fucntions (set size = 100 instances).
+
+case 3: different classes, in each set same noise function but between sets different different set sizes. 
+
+case 4: different classes, in each set same noise function and same set size but different size of sequential runs.
+
+case 5: for each instance (same class, same noise function, oversampled), different instances between sequential runs, same or differnt noise fucntion between sequential runs.

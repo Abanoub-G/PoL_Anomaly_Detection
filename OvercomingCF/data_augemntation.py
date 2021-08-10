@@ -115,33 +115,69 @@ def shift_data_augmentation(instance,instance_label, num_of_new_instances, shift
 	# input("press enter to continue")
 	return instances, instances_labels
 
-
-
-def retraining_data_generation(X_train, Y_train):
-
+def new_instances_generation(X_train, Y_train,\
+								mnist_gn_train_X, mnist_gn_train_Y,\
+								mnist_motion_train_X, mnist_motion_train_Y,\
+								mnist_contrast_train_X, mnist_contrast_train_Y,\
+								new_instance_flag):
+	
 	# Create the noisy instance and supply into the data augmentation code
 	# == Create new instance ===========================================
-	new_instance_flag = 1
-	# New Instance 1
-	if new_instance_flag == 1:
+	# new_instance_flag = 2
+	# # New Instance 1
+	# if new_instance_flag == 1:
+	# 	# Choose datapoint to create new instance out of it
+	# 	i = 1
+	# 	new_instance =  X_train[i]#[0][0]
+	# 	new_instance = 1-new_instance
+	# 	new_instance_label = [Y_train[i]]
+
+	# 	# Add noise to it
+	# 	# print("len(new_instance[0]) = ",len(new_instance[0]))
+	# 	# print("len(new_instance[0][0]) = ",len(new_instance[0][0]))
+	# 	# print("news_instance = ",new_instance)
+	# 	for i_x in range(len(new_instance[0])):
+	# 		for i_y in range(len(new_instance[0][0])):
+	# 			new_instance[0][i_x][i_y] = min(new_instance[0][i_x][i_y], 1)
+
+	# 		# plt.imshow(new_instance.reshape(28, 28), cmap=plt.get_cmap('gray'))
+	# 		# # save the new instance picture
+	# 		# plt.savefig('new_instance.png')
+	# 	print("instances.dtype = ",new_instance.dtype)
+	# 	print("instances.shape = ",new_instance.shape)
+	# 	plt.imshow(new_instance.reshape(28, 28), cmap=plt.get_cmap('gray'))
+	# 	# save the new instance picture
+	# 	plt.savefig('new_instance.png')
+	# 	input("press enter to continue")
+
+
+	# if new_instance_flag == 2:
 		# Choose datapoint to create new instance out of it
-		i = 1
-		new_instance =  X_train[i]#[0][0]
-		new_instance = 1-new_instance
-		new_instance_label = [Y_train[i]]
+	i = new_instance_flag
+	new_instance =  mnist_contrast_train_X[i]#[0][0]
+	new_instance_label = [mnist_contrast_train_Y[i]]
+	# new_instance = new_instance.reshape(new_instance.shape[0], 1, 28, 28)
+	# new_instance = new_instance.reshape(28, 28)
 
-		# Add noise to it
-		# print("len(new_instance[0]) = ",len(new_instance[0]))
-		# print("len(new_instance[0][0]) = ",len(new_instance[0][0]))
-		# print("news_instance = ",new_instance)
-		for i_x in range(len(new_instance[0])):
-			for i_y in range(len(new_instance[0][0])):
-				new_instance[0][i_x][i_y] = min(new_instance[0][i_x][i_y], 1)
+	new_instance = new_instance.reshape((new_instance.shape[0], 28, 28))
+	new_instance = np.array(new_instance)
+	print("instances.dtype = ",new_instance.dtype)
+	print("instances.shape = ",new_instance.shape)
+	plt.imshow(new_instance.reshape(28, 28), cmap=plt.get_cmap('gray'))
+	# save the new instance picture
+	plt.savefig('new_instance_HERE.png')
+	print("new_instance_label = ", new_instance_label)
+	# input("press enter to continue")
 
-			# plt.imshow(new_instance.reshape(28, 28), cmap=plt.get_cmap('gray'))
-			# # save the new instance picture
-			# plt.savefig('new_instance.png')
+		# plt.imshow(new_instance.reshape(28, 28), cmap=plt.get_cmap('gray'))
+		# # save the new instance picture
+		# plt.savefig('new_instance.png')
 
+	return new_instance, new_instance_label
+
+
+
+def new_instance_oversampling(new_instance, new_instance_label):
 
 	# == Data augmentation for new instance ===========================================
 	# new_instance =  X_train[1]
@@ -218,7 +254,7 @@ def retraining_data_generation(X_train, Y_train):
 
 
 	# == Add an equal number of data points from the other classes ===========================================
-	rehersal_flag = True
+	rehersal_flag = False
 	if rehersal_flag == True:	
 		# Extract each dataset for each class
 		for digit in np.unique(Y_train):
@@ -306,172 +342,262 @@ mnist.init()
 
 X_train, Y_train, X_test, Y_test = mnist.load()
 
-retraining_dataset, retraining_dataset_labels,\
-only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels = retraining_data_generation(X_train, Y_train)
-retraining_dataset_labels = np.array(retraining_dataset_labels, dtype=np.uint8)
-only_new_instance_retraining_dataset_labels = np.array(only_new_instance_retraining_dataset_labels, dtype=np.uint8)
+from scipy.io import loadmat
+mnist_gn = loadmat("mnist-with-awgn.mat")
+mnist_motion = loadmat("mnist-with-motion-blur.mat")
+mnist_contrast = loadmat("mnist-with-reduced-contrast-and-awgn.mat")
+print(mnist_motion)
+mnist_gn_train_X = mnist_gn["train_x"]
+mnist_gn_train_Y = mnist_gn["train_y"]
+mnist_motion_train_X = mnist_motion["train_x"]
+mnist_motion_train_Y = mnist_motion["train_y"]
+mnist_contrast_train_X = mnist_contrast["train_x"]
+mnist_contrast_train_Y = mnist_contrast["train_y"]
+print("mnist_motion_train_X = ", mnist_motion_train_X)
+print("mnist_motion_train_X.dtype = ",mnist_motion_train_X.dtype)
+print("mnist_motion_train_X.shape = ",mnist_motion_train_X.shape)
+print("mnist_motion_train_Y.dtype = ",mnist_motion_train_Y.dtype)
+print("mnist_motion_train_Y.shape = ",mnist_motion_train_Y.shape)
+mnist_gn_train_X = mnist_gn_train_X.astype('float32')
+mnist_gn_train_X = mnist_gn_train_X.reshape((mnist_motion_train_X.shape[0], 1, 28, 28))
+mnist_motion_train_X = mnist_motion_train_X.astype('float32')
+mnist_motion_train_X = mnist_motion_train_X.reshape((mnist_motion_train_X.shape[0], 1, 28, 28))
+mnist_contrast_train_X = mnist_contrast_train_X.astype('float32')
+mnist_contrast_train_X = mnist_contrast_train_X.reshape((mnist_motion_train_X.shape[0], 1, 28, 28))
+print("mnist_motion_train_X.dtype = ",mnist_motion_train_X.dtype)
+print("mnist_motion_train_X.shape = ",mnist_motion_train_X.shape)
+i = 0
+plt.imshow(mnist_gn_train_X[i].reshape(28, 28), cmap=plt.get_cmap('gray'))
+plt.savefig('mnist_gn_train_X.png')
 
+plt.imshow(mnist_motion_train_X[i].reshape(28, 28), cmap=plt.get_cmap('gray'))
+plt.savefig('mnist_motion_train_X.png')
 
-# print("len(X_train) = ",len(X_train))
-# print("X_train.dtype = ",X_train.dtype)
-# print("X_train.shape = ",X_train.shape)
+plt.imshow(mnist_contrast_train_X[i].reshape(28, 28), cmap=plt.get_cmap('gray'))
+plt.savefig('mnist_contrast_train_X.png')
+mnist_gn_train_Y_temp = []
+mnist_motion_train_Y_temp = []
+mnist_contrast_train_Y_temp = []
+for j in range(len(mnist_gn_train_Y)):
+	mnist_gn_train_Y_temp.append(np.where(mnist_gn_train_Y[j] == 1)[0][0])
+	mnist_motion_train_Y_temp.append(np.where(mnist_motion_train_Y[j] == 1)[0][0])
+	mnist_contrast_train_Y_temp.append(np.where(mnist_contrast_train_Y[j] == 1)[0][0])
+	# print(mnist_gn_train_Y_temp)
 
-# print("len(Y_train) = ",len(Y_train))
-# print("Y_train.dtype = ",Y_train.dtype)
-# print("Y_train.shape = ",Y_train.shape)
+	# plt.imshow(mnist_gn_train_X[j].reshape(28, 28), cmap=plt.get_cmap('gray'))
+	# plt.savefig('mnist_gn_train_X.png')
+	# input("press eneter")
+mnist_gn_train_Y = np.array(mnist_gn_train_Y_temp, dtype=np.uint8) 
+mnist_motion_train_Y = np.array(mnist_motion_train_Y_temp, dtype=np.uint8) 
+mnist_contrast_train_Y = np.array(mnist_contrast_train_Y_temp, dtype=np.uint8) 
+print("mnist_gn_train_Y[i] = ", mnist_gn_train_Y[i])
+print("mnist_motion_train_Y[i] = ", mnist_motion_train_Y[i])
+print("mnist_contrast_train_Y[i] = ", mnist_contrast_train_Y[i])
 
-# print("len(X_test) = ",len(X_test))
-# print("X_test.dtype = ",X_test.dtype)
-# print("X_test.shape = ",X_test.shape)
+print("mnist_gn_train_Y.dtype = ",mnist_gn_train_Y.dtype)
+print("mnist_gn_train_Y.shape = ",mnist_gn_train_Y.shape)
 
-# print("len(Y_test) = ",len(Y_test))
-# print("Y_test.dtype = ",Y_test.dtype)
-# print("Y_test.shape = ",Y_test.shape)
+print("Y_train.dtype = ",Y_train.dtype)
+print("Y_train.shape = ",Y_train.shape)
 
-# print("len(retraining_dataset_labels) = ",len(retraining_dataset_labels))
-# print("retraining_dataset_labels.dtype = ", retraining_dataset_labels.dtype)
-# print("retraining_dataset_labels = ", retraining_dataset_labels)
-# print("retraining_dataset_labels.shape = ",retraining_dataset_labels.shape)
+print("X_train.dtype = ",X_train.dtype)
+print("X_train.shape = ",X_train.shape)
+print("Y_train[i] = ", Y_train[i])
+plt.imshow(X_train[i].reshape(28, 28), cmap=plt.get_cmap('gray'))
+plt.savefig('X_train.png')
+# input("Press Enter to cotinueee")
 
-# # print("retraining_dataset.shape = ",retraining_dataset.shape)
-# # retraining_dataset = np.array(retraining_dataset, dtype=np.float32)
-# print("len(retraining_dataset) = ",len(retraining_dataset))
-# print("retraining_dataset.dtype = ", retraining_dataset.dtype)
-# print("retraining_dataset.shape = ",retraining_dataset.shape)
+initial_training = True
+# indicies_of_bad_performing_datapoints = []
+for new_instance_flag in range(len(X_train)):
 
+	# new_instance_flag = 2
+	new_instance, new_instance_label = new_instances_generation(X_train, \
+																Y_train, \
+																mnist_gn_train_X,\
+																mnist_gn_train_Y,\
+																mnist_motion_train_X,\
+																mnist_motion_train_Y,\
+																mnist_contrast_train_X,\
+																mnist_contrast_train_Y,\
+																new_instance_flag)
 
-# # print("len(retraining_dataset_labels) = ",len(retraining_dataset_labels))
-# # print("retraining_dataset_labels = ", retraining_dataset_labels)
-# # print("retraining_dataset_labels.dtype = ",retraining_dataset_labels.dtype)
+	retraining_dataset, \
+	retraining_dataset_labels,\
+	only_new_instance_retraining_dataset, \
+	only_new_instance_retraining_dataset_labels = new_instance_oversampling(new_instance, new_instance_label)
 
-# # print("len(retraining_dataset) = ",len(retraining_dataset))
-# # print("retraining_dataset.dtype = ",retraining_dataset.dtype)
-
-
-
-
-
-
-# task 1
-portion_1 = portion_2 = 1
-# portion_1 = int(len(x_train)*init_dataset_portion) #0.15
-# task_1 = [(X_train[0:portion_1], t_train[0:portion_1]), (x_test, t_test)]
-task_1 = [(X_train, Y_train), (X_test, Y_test),\
-			(retraining_dataset, retraining_dataset_labels),\
-			(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels)]
-
-# task 2
-task_2 = [(retraining_dataset, retraining_dataset_labels), (X_test, Y_test),\
-			(retraining_dataset, retraining_dataset_labels),\
-			(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels)]
-
-# task 3
-task_3 = [(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels), (X_test, Y_test),\
-			(retraining_dataset, retraining_dataset_labels),\
-			(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels)]
-
-# x_train2, x_test2 = permute_mnist([x_train[0:portion_2], x_test], 1)
-# task_2 = [(x_train2, t_train[0:portion_2]), (x_test2, t_test)]
-
-# task 3
-# x_train3, x_test3 = permute_mnist([x_train, x_test], 2)
-# task_3 = [(x_train3, t_train), (x_test3, t_test)]
-
-# task list
-# tasks = [task_1, task_2, task_3]
-
-# tasks = [task_1, task_2]
-tasks = [task_1, task_3]
-
-
-# == Declaring dictionaries ========================================
-
-fisher_dict = {}
-optpar_dict = {}
-
-results_logs = logs()
-
-# == Initial training ========================================
-
-lr_value_init       = 0.01   # learning rate for initial learning
-momentum_value_init = 0.9    # momentum value for initial learning
-ewc_lambda          = 0      # setting ewc_lambda to 0, so no retraining factor
-dataset_no          = 0      # dataset ID   
-
-
-model = Net().to(device)
-optimizer = optim.SGD(model.parameters(), lr=lr_value_init, momentum=momentum_value_init)
-
-# print("Training on dataset no.", dataset_no, "(Initial training), with dataset size:",portion_1,"init_dataset_portion = ",init_dataset_portion)
-
-# (x_train, t_train), _ = tasks[dataset_no]
-for epoch in range(0, 30):
-	model, fisher_dict, optpar_dict = train_ewc(model, device, dataset_no, X_train, Y_train, optimizer, epoch, ewc_lambda, fisher_dict, optpar_dict)
-fisher_dict, optpar_dict = on_task_update(dataset_no, X_train, Y_train, model,optimizer, fisher_dict, optpar_dict)
-
-# evaluate model
-acc = model_evaluation(model, tasks)
-
-# log
-for i in range(len(tasks)):
-	_, (temp_X_test, temp_Y_test),_,_ = tasks[i]
-	results_logs.append(current_training_dataset_no = dataset_no, \
-						current_training_dataset_size = portion_1,\
-						ewc_lambda = ewc_lambda, \
-						lr_init = lr_value_init, \
-						momentum_init = momentum_value_init, \
-						lr_cont=0, \
-						momentum_cont = 0, \
-						evaluation_dataset_no = i, \
-						evaluation_dataset_size = len(temp_X_test), \
-						acc = acc[i])
+	retraining_dataset_labels = np.array(retraining_dataset_labels, dtype=np.uint8)
+	only_new_instance_retraining_dataset_labels = np.array(only_new_instance_retraining_dataset_labels, dtype=np.uint8)
 
 
 
-# == Retraining ==============================================
+	# print("len(X_train) = ",len(X_train))
+	# print("X_train.dtype = ",X_train.dtype)
+	# print("X_train.shape = ",X_train.shape)
 
-retraining_flag = True
-vary_ewc_lambda = False
+	# print("len(Y_train) = ",len(Y_train))
+	# print("Y_train.dtype = ",Y_train.dtype)
+	# print("Y_train.shape = ",Y_train.shape)
+
+	# print("len(X_test) = ",len(X_test))
+	# print("X_test.dtype = ",X_test.dtype)
+	# print("X_test.shape = ",X_test.shape)
+
+	# print("len(Y_test) = ",len(Y_test))
+	# print("Y_test.dtype = ",Y_test.dtype)
+	# print("Y_test.shape = ",Y_test.shape)
+
+	# print("len(retraining_dataset_labels) = ",len(retraining_dataset_labels))
+	# print("retraining_dataset_labels.dtype = ", retraining_dataset_labels.dtype)
+	# print("retraining_dataset_labels = ", retraining_dataset_labels)
+	# print("retraining_dataset_labels.shape = ",retraining_dataset_labels.shape)
+
+	# # print("retraining_dataset.shape = ",retraining_dataset.shape)
+	# # retraining_dataset = np.array(retraining_dataset, dtype=np.float32)
+	# print("len(retraining_dataset) = ",len(retraining_dataset))
+	# print("retraining_dataset.dtype = ", retraining_dataset.dtype)
+	# print("retraining_dataset.shape = ",retraining_dataset.shape)
 
 
-if retraining_flag == True:
+	# # print("len(retraining_dataset_labels) = ",len(retraining_dataset_labels))
+	# # print("retraining_dataset_labels = ", retraining_dataset_labels)
+	# # print("retraining_dataset_labels.dtype = ",retraining_dataset_labels.dtype)
 
-	lr_value_cont = 0.0001                    # learning rate for continual retraining
-	momentum_value_cont = 0.9               # momentum value for continual retraining
-	
-	if vary_ewc_lambda == True:
-		ewc_lambdas = list(np.arange(0,20,1))   # range of ewc_lambda used in retraining
-	else:
-		ewc_lambdas = [20]
-	
-	dataset_no          = 1                 # dataset ID 
+	# # print("len(retraining_dataset) = ",len(retraining_dataset))
+	# # print("retraining_dataset.dtype = ",retraining_dataset.dtype)
 
-	(x_train, t_train), _, _, _ = tasks[dataset_no]
-	for ewc_lambda in ewc_lambdas:
-		retrained_model = Net().to(device)
-		retrained_model.load_state_dict(model.state_dict())
-		optimizer = optim.SGD(retrained_model.parameters(), lr=lr_value_cont, momentum=momentum_value_cont)
 
+
+
+
+
+	# task 1
+	portion_1 = portion_2 = 1
+	# portion_1 = int(len(x_train)*init_dataset_portion) #0.15
+	# task_1 = [(X_train[0:portion_1], t_train[0:portion_1]), (x_test, t_test)]
+	task_1 = [(X_train, Y_train), (X_test, Y_test),\
+				(retraining_dataset, retraining_dataset_labels),\
+				(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels)]
+
+	# task 2
+	task_2 = [(retraining_dataset, retraining_dataset_labels), (X_test, Y_test),\
+				(retraining_dataset, retraining_dataset_labels),\
+				(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels)]
+
+	# task 3
+	task_3 = [(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels), (X_test, Y_test),\
+				(retraining_dataset, retraining_dataset_labels),\
+				(only_new_instance_retraining_dataset, only_new_instance_retraining_dataset_labels)]
+
+	# x_train2, x_test2 = permute_mnist([x_train[0:portion_2], x_test], 1)
+	# task_2 = [(x_train2, t_train[0:portion_2]), (x_test2, t_test)]
+
+	# task 3
+	# x_train3, x_test3 = permute_mnist([x_train, x_test], 2)
+	# task_3 = [(x_train3, t_train), (x_test3, t_test)]
+
+	# task list
+	# tasks = [task_1, task_2, task_3]
+
+	# tasks = [task_1, task_2]
+	tasks = [task_1, task_3]
+
+
+	# == Declaring dictionaries ========================================
+
+	fisher_dict = {}
+	optpar_dict = {}
+
+	results_logs = logs()
+
+	if initial_training == True:
+		initial_training = False
+		# == Initial training ========================================
+
+		lr_value_init       = 0.01   # learning rate for initial learning
+		momentum_value_init = 0.9    # momentum value for initial learning
+		ewc_lambda          = 0      # setting ewc_lambda to 0, so no retraining factor
+		dataset_no          = 0      # dataset ID   
+
+
+		model = Net().to(device)
+		optimizer = optim.SGD(model.parameters(), lr=lr_value_init, momentum=momentum_value_init)
+
+		# print("Training on dataset no.", dataset_no, "(Initial training), with dataset size:",portion_1,"init_dataset_portion = ",init_dataset_portion)
+
+		# (x_train, t_train), _ = tasks[dataset_no]
 		for epoch in range(0, 30):
-			retrained_model, fisher_dict, optpar_dict = train_ewc(retrained_model, device, dataset_no, x_train, t_train, optimizer, epoch, ewc_lambda, fisher_dict, optpar_dict)
-		fisher_dict, optpar_dict = on_task_update(dataset_no, x_train, t_train,retrained_model,optimizer, fisher_dict, optpar_dict)
+			model, fisher_dict, optpar_dict = train_ewc(model, device, dataset_no, X_train, Y_train, optimizer, epoch, ewc_lambda, fisher_dict, optpar_dict)
+		fisher_dict, optpar_dict = on_task_update(dataset_no, X_train, Y_train, model,optimizer, fisher_dict, optpar_dict)
 
-		# evaluate model
-		acc = model_evaluation(retrained_model, tasks)
+	# evaluate model
+	acc = model_evaluation(model, tasks)
 
-		# log
-		for i in range(len(tasks)):
-			_, (temp_X_test, temp_Y_test), _, _  = tasks[i]
-			results_logs.append(current_training_dataset_no = dataset_no, \
-								current_training_dataset_size = portion_2,\
-								ewc_lambda = ewc_lambda, \
-								lr_init = lr_value_init, \
-								momentum_init = momentum_value_init, \
-								lr_cont=lr_value_cont, \
-								momentum_cont = momentum_value_cont, \
-								evaluation_dataset_no = i, \
-								evaluation_dataset_size = len(temp_X_test), \
-								acc = acc[i])
+	# log
+	for i in range(len(tasks)):
+		_, (temp_X_test, temp_Y_test),_,_ = tasks[i]
+		# results_logs.append(current_training_dataset_no = dataset_no, \
+		# 					current_training_dataset_size = portion_1,\
+		# 					ewc_lambda = ewc_lambda, \
+		# 					lr_init = lr_value_init, \
+		# 					momentum_init = momentum_value_init, \
+		# 					lr_cont=0, \
+		# 					momentum_cont = 0, \
+		# 					evaluation_dataset_no = i, \
+		# 					evaluation_dataset_size = len(temp_X_test), \
+		# 					acc = acc[i])
+
+	if acc < 15.:
+		print("new_instance_flag = ", new_instance_flag)
+		print("new_instance_label = ", new_instance_label)
+		input("Press enter")
+
+
+	# == Retraining ==============================================
+
+	retraining_flag = False
+	vary_ewc_lambda = False
+
+
+	if retraining_flag == True:
+
+		lr_value_cont = 0.0001                    # learning rate for continual retraining
+		momentum_value_cont = 0.9               # momentum value for continual retraining
+		
+		if vary_ewc_lambda == True:
+			ewc_lambdas = list(np.arange(0,20,1))   # range of ewc_lambda used in retraining
+		else:
+			ewc_lambdas = [20]
+		
+		dataset_no          = 1                 # dataset ID 
+
+		(x_train, t_train), _, _, _ = tasks[dataset_no]
+		for ewc_lambda in ewc_lambdas:
+			retrained_model = Net().to(device)
+			retrained_model.load_state_dict(model.state_dict())
+			optimizer = optim.SGD(retrained_model.parameters(), lr=lr_value_cont, momentum=momentum_value_cont)
+
+			for epoch in range(0, 30):
+				retrained_model, fisher_dict, optpar_dict = train_ewc(retrained_model, device, dataset_no, x_train, t_train, optimizer, epoch, ewc_lambda, fisher_dict, optpar_dict)
+			fisher_dict, optpar_dict = on_task_update(dataset_no, x_train, t_train,retrained_model,optimizer, fisher_dict, optpar_dict)
+
+			# evaluate model
+			acc = model_evaluation(retrained_model, tasks)
+
+			# log
+			for i in range(len(tasks)):
+				_, (temp_X_test, temp_Y_test), _, _  = tasks[i]
+				results_logs.append(current_training_dataset_no = dataset_no, \
+									current_training_dataset_size = portion_2,\
+									ewc_lambda = ewc_lambda, \
+									lr_init = lr_value_init, \
+									momentum_init = momentum_value_init, \
+									lr_cont=lr_value_cont, \
+									momentum_cont = momentum_value_cont, \
+									evaluation_dataset_no = i, \
+									evaluation_dataset_size = len(temp_X_test), \
+									acc = acc[i])
 
 
 

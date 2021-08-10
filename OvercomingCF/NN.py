@@ -180,6 +180,7 @@ def model_evaluation(model, tasks):
 		print("Accuracy on X_test =  ",test(model, device, x_test1, y_test1))
 		print("Accuracy on retraining_dataset =  ",test(model, device, x_test2, y_test2))
 		print("Accuracy on only_new_instance_retraining_dataset =  ",test(model, device, x_test3, y_test3))
+	acc = test(model, device, x_test3, y_test3)
 
 	return acc
 
