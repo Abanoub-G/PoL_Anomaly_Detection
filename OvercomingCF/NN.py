@@ -101,11 +101,14 @@ def train_ewc(model_input, device, task_id, x_train, t_train, optimizer, epoch, 
 		loss = F.cross_entropy(output, y)
 		
 		# EWC -- magic here! :-)
+		# print("I am about to do EWC")
 		for task in range(task_id):
+			# print("I am in EWC and I am working on taks nummber", task)
+			# print("ewc_lambda[task] = ",ewc_lambda[task])
 			for name, param in model_input.named_parameters():
 				fisher = fisher_dict[task][name]
 				optpar = optpar_dict[task_id-1][name]
-				loss += (fisher * (optpar - param).pow(2)).sum() * ewc_lambda
+				loss += (fisher * (optpar - param).pow(2)).sum() * ewc_lambda[task]
 				# loss += ((optpar - param).pow(2)).sum() * ewc_lambda   
 		loss.backward()
 		optimizer.step()

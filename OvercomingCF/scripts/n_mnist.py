@@ -68,9 +68,11 @@ def load(noise_type):
     test_Y = data["test_y"]
 
     train_X = train_X.astype('float32')
-    train_X = train_X.reshape((train_X.shape[0], 1, 28, 28))
+    train_X = train_X.reshape((train_X.shape[0], 1, 28, 28)) 
+    train_X = train_X / 255 # normalise data 
     test_X = test_X.astype('float32')
     test_X = test_X.reshape((test_X.shape[0], 1, 28, 28))
+    test_X = test_X / 255 # normalise data 
 
     train_Y_temp = []
     test_Y_temp = []
@@ -84,8 +86,16 @@ def load(noise_type):
     train_Y = np.array(train_Y_temp, dtype=np.uint8) 
     test_Y = np.array(test_Y_temp, dtype=np.uint8) 
 
-    return train_X, train_Y, \
-           test_X, test_Y
+    dataset = {}
+    dataset["training_images"] = train_X
+    dataset["training_labels"] = train_Y
+    dataset["testing_images"]  = test_X
+    dataset["testing_labels"]  = test_Y
+
+
+    return dataset["training_images"], dataset["training_labels"], \
+           dataset["testing_images"], dataset["testing_labels"],\
+           dataset
 
 
 def init():

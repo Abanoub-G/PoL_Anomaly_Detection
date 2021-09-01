@@ -16,3 +16,10 @@ OvercomingCF/mnist.pkl
 OvercomingCF/X_train.npy
 OvercomingCF/Y_train.npy
 OvercomingCF/FineTuning/
+
+OvercomingCF/mnist-with-awgn.gz
+OvercomingCF/mnist-with-awgn.mat
+OvercomingCF/mnist-with-motion-blur.gz
+OvercomingCF/mnist-with-motion-blur.mat
+OvercomingCF/mnist-with-reduced-contrast-and-awgn.gz
+OvercomingCF/mnist-with-reduced-contrast-and-awgn.mat

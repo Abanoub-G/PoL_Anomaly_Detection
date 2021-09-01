@@ -88,7 +88,12 @@ X_train, Y_train, X_test, Y_test = mnist.load()
 
 # Retraining dataset
 n_mnist.init()
-X_retraining, Y_retraining = n_mnist.load()
+gn_dataset = [X_train_gn, Y_train_gn, X_test_gn, Y_test_gn] = n_mnist.load("gn") # load gaussian nosie dataset
+blur_dataset = [X_train_blur, Y_train_blur, X_test_blur, Y_test_blur] = n_mnist.load("blur") # load blur dataset
+contrast_dataset = [X_train_contrast, Y_train_contrast, X_test_contrast, Y_test_contrast] = n_mnist.load("contrast") # load low contrast dataset
+
+# retraining sets representing the open world environment
+retraining_sets = New_instances_suite_2(gn_dataset, blur_dataset, contrast_dataset)
 
 # ======================================================================
 # == Initial Training
@@ -192,7 +197,7 @@ for instance, instance_label in X_retraining, Y_retraining:
 
 
 	# ADD evaluation on testing the noisy pattern to see whether retraining generalises or not. 
-	
+
 	# Retrain on new instance
 
 	# First try retraining by just reducing the learning rate 
