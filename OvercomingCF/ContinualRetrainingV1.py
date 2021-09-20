@@ -66,7 +66,7 @@ contrast_X_train, contrast_Y_train ,contrast_X_test,contrast_Y_test, contrast_da
 
 # retraining sets representing the open world environment
 n_retraining_sets  = 20  # Number of differnt retraining sets
-num_of_oversamples = 1000 # number of oversampled instances to be generated
+num_of_oversamples = 50 # number of oversampled instances to be generated
 max_rotation = 30
 max_shift    = 0.2
 
