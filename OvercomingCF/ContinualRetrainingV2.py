@@ -67,7 +67,7 @@ blur_X_train, blur_Y_train ,blur_X_test, blur_Y_test, blur_dataset              
 contrast_X_train, contrast_Y_train ,contrast_X_test,contrast_Y_test, contrast_dataset = n_mnist.load("contrast") # load contrast noise dataset
 
 # retraining sets representing the open world environment
-n_retraining_sets  = 10  # Number of differnt retraining sets
+n_retraining_sets  = 30  # Number of differnt retraining sets
 num_of_oversamples = 1000 # number of oversampled instances to be generated
 max_rotation = 30
 max_shift    = 0.2
@@ -340,27 +340,47 @@ if Retraining_flag == True :
 		temp_acc_original_data = np.array(temp_acc_original_data)
 		temp_acc_accumilated_data = np.array(temp_acc_accumilated_data)
 
-		# == Method 1 of scoring ==================================================
-		# Assess if they fit the criteria below:
-		original_data_acc_threshold = 95
+		# # == Method 1 of scoring ==================================================
+		# # Assess if they fit the criteria below:
+		# original_data_acc_threshold = 95
 
-		# Original data performance must be above 95%
-		temp_indicies = np.where(temp_acc_original_data >= original_data_acc_threshold)
+		# # Original data performance must be above ---
+		# temp_indicies = np.where(temp_acc_original_data >= original_data_acc_threshold)
+		# temp_indicies = temp_indicies[0]
+
+		# # If non then select the highest one performing on the original data
+		# if len(temp_indicies) == 0:
+		# 	temp_indicies = np.where(temp_acc_original_data == max(temp_acc_original_data)) 
+		# 	temp_indicies = temp_indicies[0]
+		
+		# # Then out of the selected choose the one with the highest performance on the new data
+		# accumilated_data_acc_filtered = temp_acc_accumilated_data[temp_indicies]
+		# max_accumilated_data_acc = max(accumilated_data_acc_filtered)
+		# max_index = np.where(accumilated_data_acc_filtered == max_accumilated_data_acc)
+		# index_of_best_scoring_model = temp_indicies[max_index[0]][0]
+		# # =========================================================================
+
+		# == Method 2 of scoring ==================================================
+		# Assess if they fit the criteria below:
+		accumilated_data_acc_threshold = 70
+
+		# accumilated data performance must be above ---
+		temp_indicies = np.where(temp_acc_accumilated_data >= accumilated_data_acc_threshold)
 		temp_indicies = temp_indicies[0]
 
-		# If non then select the highest one performing on the original data
+		# If non then select the highest one performing on the accumilated data
 		if len(temp_indicies) == 0:
-			temp_indicies = np.where(temp_acc_original_data == max(temp_acc_original_data)) 
+			temp_indicies = np.where(temp_acc_accumilated_data == max(temp_acc_accumilated_data)) 
 			temp_indicies = temp_indicies[0]
 		
 		# Then out of the selected choose the one with the highest performance on the new data
-		accumilated_data_acc_filtered = temp_acc_accumilated_data[temp_indicies]
-		max_accumilated_data_acc = max(accumilated_data_acc_filtered)
-		max_index = np.where(accumilated_data_acc_filtered == max_accumilated_data_acc)
+		original_data_acc_filtered = temp_acc_original_data[temp_indicies]
+		max_original_data_acc = max(original_data_acc_filtered)
+		max_index = np.where(original_data_acc_filtered == max_original_data_acc)
 		index_of_best_scoring_model = temp_indicies[max_index[0]][0]
 		# =========================================================================
 
-		# == Method 2 of scoring ==================================================
+		# # == Method 3 of scoring ==================================================
 
 		
 		# index_of_best_scoring_model = np.argmin(np.abs((temp_acc_original_data/temp_acc_accumilated_data) - 1))
@@ -408,7 +428,7 @@ if Retraining_flag == True :
 
 # Folder "results" if not already there
 output_folder = "Results_logs"
-file_name     = "results_combined_06.csv"
+file_name     = "results_combined_10.csv"
 if not os.path.exists(output_folder):
 	os.makedirs(output_folder)
 
